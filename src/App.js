@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import StaffList from './StaffList/StaffListComponent';
 import './App.css';
 import { STAFFS } from './shared/staffs';
-
 
 class App extends Component {
 
@@ -12,8 +12,17 @@ class App extends Component {
       staffs: STAFFS
     };
   }
+
   render() {
-    return
+    return (
+      <div>
+        <Navbar>
+          <div className="container">
+            <NavbarBrand>Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
+          </div>
+        </Navbar>
+      </div>
+    );
   }
 }
 
