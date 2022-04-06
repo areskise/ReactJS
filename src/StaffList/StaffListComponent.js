@@ -27,6 +27,8 @@ class StaffList extends Component {
                     <CardText>Số ngày đã làm thêm: {staff.overTime}</CardText>
                 </Card>
             );
+        } else {
+            return(<div></div>);
         }
     }
 
@@ -44,6 +46,9 @@ class StaffList extends Component {
             <div className="container">
                 <div className="row">
                     {StaffList}
+                </div>
+                <div className="row">
+                    {this.renderStaff(this.state.selectedStaff)}
                 </div>
             </div>
         )
