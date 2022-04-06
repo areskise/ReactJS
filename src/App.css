@@ -1,9 +1,18 @@
 .navbar {
-    color: #fff;
     background-color: #2495ff;
-    height: 60px;
     text-align: center;
-    line-height: 60px;
-    font-size: 20px;
     font-weight: 500;
+}
+.navbar .container {
+    display: block;
+}
+.navbar-brand {
+    color: #fff;
+}
+.card {
+    margin: 10px 0;
+}
+.card-title {
+    line-height: 38px;
+    margin: 0 12px;
 }
