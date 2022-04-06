@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
-import StaffList from './StaffList/StaffListComponent';
+import StaffList from './components/StaffListComponent';
 import './App.css';
 import { STAFFS } from './shared/staffs';
 
