@@ -31,8 +31,8 @@ class Main extends Component {
             <div>
                 <Header />
                 <Switch>
-                    <Route path="/Nhân-Viên" component={() => <StaffList staffs={this.state.staffs} />} />
-                    <Route path="/Nhân-Viên/:staffId" component={StaffWithId} />
+                    <Route exact path="/Nhân-Viên" component={() => <StaffList staffs={this.state.staffs} />} />
+                    <Route exact path="/Nhân-Viên/:staffId" component={StaffWithId} />
                     <Redirect to="/Nhân-Viên" />
                 </Switch>
                 <Footer />
