@@ -6,7 +6,7 @@ function RenderDepartment ({department}) {
         <div key={department.id} className="col-12 col-md-6 col-lg-4 p-4 pl-5 pr-5">
             <div>
                 <CardTitle>{department.name}</CardTitle>
-                <CardText>Số lượng nhân viên: {department.numberOfStaff}</CardText>
+                <CardText className="border-top">Số lượng nhân viên: {department.numberOfStaff}</CardText>
             </div>
         </div>
     )
