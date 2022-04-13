@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
         );
     }
 
-    const StaffList = (props) => {
+    function StaffList(props) {
 
         const staffList = props.staffs.map((staff) => {
             return (
@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom';
         });
 
         return (
-            <div className="container">
+            <div className="container mt-3">
                 <div className="row m-0">
                     <Breadcrumb className="m-0">
                         <BreadcrumbItem><Link to='/Nhân-Viên'>Nhân Viên</Link></BreadcrumbItem>

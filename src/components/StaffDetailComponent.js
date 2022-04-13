@@ -1,7 +1,7 @@
 import React from "react";
 import { CardImg, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import dateFormat from 'dateformat';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
     function RenderStaff({staff}) {
         if (staff != null) {
@@ -29,13 +29,14 @@ import { Link } from 'react-router-dom'
     const StaffDetail = (props) => {
         if(props.staff != null) {
             return (
-                <div className="container">
+                <div className="container mt-3">
                     <div className="row m-0">
-                        <Breadcrumb>
+                        <Breadcrumb className="m-0">
                             <BreadcrumbItem><Link to='/Nhân-Viên'>Nhân Viên</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{props.staff.name}</BreadcrumbItem>
                         </Breadcrumb>
                     </div>
+                    <hr />
                     <div className="row m-0">
                         <RenderStaff staff={props.staff} />
                     </div>
