@@ -3,6 +3,10 @@ a {
     font-weight: 500;
 }
 
+a:hover {
+    color: #dc3545;
+}
+
 .row-header{
     margin:0px auto;
     padding:0px auto;
@@ -16,7 +20,7 @@ a {
 }
 
 .footer{
-    background-color: #17a2b8;
+    background-color: #2495ff;
     ;
     margin:0px auto;
     padding: 20px 0px 20px 0px;
@@ -35,5 +39,10 @@ address{
 }
 
 .navbar-dark {
-    background-color: #007bff;
+    background-color: #2495ff;
+}
+
+.btn, .form-control {
+    padding: 0.75rem 1rem;
+    float: right;
 }

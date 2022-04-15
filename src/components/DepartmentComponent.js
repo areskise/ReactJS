@@ -2,8 +2,10 @@ import React from "react";
 import { CardTitle, CardText, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from 'react-router-dom';
 
-
+//Presentational components
 function RenderDepartment ({department}) {
+
+    //Render danh sách các phòng ban
     return(
         <div key={department.id} className="col-12 col-md-6 col-lg-4 pb-5 pl-5 pr-5">
             <div>
@@ -14,13 +16,18 @@ function RenderDepartment ({department}) {
     )
 }
 
+
+//Container components
 function Department(props) {
+
+    //Dùng map() để lặp qua từng phòng ban và lấy chúng vào danh sách 
     const department = props.departments.map((department) => {
         return(
             <RenderDepartment department={department} />
         )
     })
 
+    //Render toàn bộ giao diện của trang phòng ban
     return(
         <div className="container mt-3">
             <div className="row m-0">

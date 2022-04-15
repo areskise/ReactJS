@@ -17,7 +17,6 @@ class Main extends Component {
         this.state = {
             staffs: STAFFS,
             departments: DEPARTMENTS,
-
         }
     }
 
