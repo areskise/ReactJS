@@ -18,7 +18,19 @@ class Main extends Component {
             staffs: STAFFS,
             departments: DEPARTMENTS,
         }
+        this.addStaff = this.addStaff.bind(this);
     }
+
+    //Thêm nhân viên mới vào staffs
+    addStaff(staff) {
+        const id = Math.floor(Math.random() * 10000 + 1);
+        const newStaff = { id, ...staff };
+        this.setState({
+          staffs: [...this.state.staffs, newStaff]
+        });
+        console.log(newStaff);
+        console.log(this.state.staffs);
+      }
 
     render() {
         
@@ -35,7 +47,7 @@ class Main extends Component {
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path="/Nhân-Viên" component={() => <StaffList staffs={this.state.staffs} />} />
+                    <Route exact path="/Nhân-Viên" component={() => <StaffList onAdd={this.addStaff} staffs={this.state.staffs} />} />
                     <Route exact path="/Nhân-Viên/:staffId" component={StaffWithId} />
                     <Route exact path="/Phòng-Ban" component={() => <Department departments={this.state.departments} />} />
                     <Route exact path="/Bảng-Lương" component={() => <Salary staffs={this.state.staffs}/>} />
