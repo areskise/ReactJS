@@ -21,15 +21,13 @@ class Main extends Component {
         this.addStaff = this.addStaff.bind(this);
     }
 
-    //Thêm nhân viên mới vào staffs
+    //Thêm nhân viên mới vào staffs với id ngẫu nhiên
     addStaff(staff) {
         const id = Math.floor(Math.random() * 10000 + 1);
         const newStaff = { id, ...staff };
         this.setState({
           staffs: [...this.state.staffs, newStaff]
         });
-        console.log(newStaff);
-        console.log(this.state.staffs);
       }
 
     render() {
