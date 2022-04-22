@@ -66,7 +66,21 @@ class StaffList extends Component {
     }
 
     //Tạo một nhần viên mới với các dữ liệu đã được điền
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        if(this.state.name === ""){
+        this.setState({
+            touched: {
+                name: true,
+                doB: true,
+                salaryScale: true,
+                startDate: true,
+                department: true,
+                annualLeave: true,
+                overTime: true
+            }
+        })
+        this.validate();
+    } else {
         const newStaff = {
             name: this.state.name,
             doB: this.state.doB,
@@ -78,6 +92,9 @@ class StaffList extends Component {
             image: this.state.image
         }
         this.props.onAdd(newStaff);
+    }
+        event.preventDefault();
+
     }
 
 
