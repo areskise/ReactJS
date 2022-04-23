@@ -18,13 +18,13 @@ import CommentForm from "./CommentForm";
                 </div>
             ); 
         } else {
-                    return(
-                        <div></div>
-                    );
-                }
+            return(
+                <div></div>
+            );
+        }
     }
 
-    function RenderComments ({comments}) {
+    function RenderComments ({comments, addComment, dishId}) {
         if (comments != null) {
             return(
                 <div className="col-12 col-md-5 m-1">
@@ -41,7 +41,7 @@ import CommentForm from "./CommentForm";
                             );
                         })}
                     </ul>
-                    <CommentForm />
+                    <CommentForm dishId={dishId} addComment={addComment} />
                 </div>
             );
         } else {
@@ -67,7 +67,10 @@ import CommentForm from "./CommentForm";
                     </div>
                     <div className="row">
                         <RenderDish dish={props.dish} />
-                        <RenderComments comments={props.comment} />              
+                        <RenderComments comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id}
+                        />              
                     </div>
                 </div>
             );
