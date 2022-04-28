@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function RenderSalary({ staff }) {
 
     //Thêm thuộc tính salary vào trong staff và tính lương
-    staff.salary = parseInt(parseFloat(staff.salaryScale) * 3000000 + (parseFloat(staff.overTime) / 8) * 200000);
+    staff.salary = parseInt((parseFloat(staff.salaryScale) * 3000000 + (parseFloat(staff.overTime) / 8) * 200000),10);
     
     return(
         <Card>
