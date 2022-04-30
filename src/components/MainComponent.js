@@ -7,24 +7,29 @@ import Footer from './FooterComponent';
 import Salary from "./SalaryComponent";
 import { Route, Switch, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { addNewStaff, fetchStaffs } from '../redux/ActionCreators';
+import { addNewStaff, fetchDepartments, fetchStaffs, fetchStaffsSalary } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
         staffs: state.staffs,
-        departments: state.departments
+        departments: state.departments,
+        staffsSalary: state.staffsSalary
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addNewStaff: (staffId, name, doB, startDate, department, salaryScale, annualLeave, overTime, image) => dispatch(addNewStaff(staffId, name, doB, startDate, department, salaryScale, annualLeave, overTime, image)),
-    fetchStaffs: () => {dispatch(fetchStaffs())}
+    addNewStaff: (staffId, name, doB, startDate, department, salaryScale, annualLeave, overTime) => dispatch(addNewStaff(staffId, name, doB, startDate, department, salaryScale, annualLeave, overTime)),
+    fetchStaffs: () => {dispatch(fetchStaffs())},
+    fetchDepartments: () => {dispatch(fetchDepartments())},
+    fetchStaffsSalary: () => {dispatch(fetchStaffsSalary())},
 })
 
 class Main extends Component {
 
     componentDidMount() {
         this.props.fetchStaffs();
+        this.props.fetchDepartments();
+        this.props.fetchStaffsSalary();
     }
 
     render() {
@@ -46,12 +51,20 @@ class Main extends Component {
                     <Route exact path="/Nhân-Viên" component={() => <StaffList
                         staffs={this.props.staffs}
                         addNewStaff={this.props.addNewStaff}
-                        staffsLoading={this.props.staffs.isLoading}
-                        staffsErrMess={this.props.staffs.errMess}
+                        isLoading={this.props.staffs.isLoading}
+                        errMess={this.props.staffs.errMess}
                     />} />
                     <Route exact path="/Nhân-Viên/:staffId" component={StaffWithId} />
-                    <Route exact path="/Phòng-Ban" component={() => <Department departments={this.props.departments} />} />
-                    <Route exact path="/Bảng-Lương" component={() => <Salary staffs={this.props.staffs}/>} />
+                    <Route exact path="/Phòng-Ban" component={() => <Department
+                        departments={this.props.departments} 
+                        isLoading={this.props.departments.isLoading}
+                        errMess={this.props.departments.errMess}
+                    />} />
+                    <Route exact path="/Bảng-Lương" component={() => <Salary 
+                        staffs={this.props.staffs}
+                        isLoading={this.props.staffsSalary.isLoading}
+                        errMess={this.props.staffsSalary.errMess}
+                    />} />
                     <Redirect to="/Nhân-Viên" />
                 </Switch>
                 <Footer />

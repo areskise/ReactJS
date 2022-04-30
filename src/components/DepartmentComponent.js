@@ -21,7 +21,7 @@ function RenderDepartment ({department}) {
 function Department(props) {
 
     //Dùng map() để lặp qua từng phòng ban và lấy chúng vào danh sách 
-    const department = props.departments.map((department) => {
+    const department = props.departments.departments.map((department) => {
         return(
             <RenderDepartment department={department} />
         )

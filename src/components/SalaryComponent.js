@@ -27,7 +27,7 @@ function Salary(props) {
     const [sortSalary, setSort] = useState(false);
 
     //Sắp xếp lại danh sách theo lương khi sortStaff được thay đổi
-    const salaryList = props.staffs.sort((a, b) => {
+    const salaryList = props.staffs.staffs.sort((a, b) => {
         if (sortSalary) {
             return b.salary - a.salary;
         } else {

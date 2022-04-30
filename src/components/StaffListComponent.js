@@ -74,7 +74,6 @@ class StaffList extends Component {
 
     //Tạo một nhần viên mới với các dữ liệu đã được điền
     handleSubmit = (value) => {
-        this.toggleModal();
         if (this.state.doB === "" || this.state.startDate === "") {
             this.setState({
                 touched: {
@@ -107,7 +106,11 @@ class StaffList extends Component {
     //Đóng mở Modal thêm nhân viên
     toggleModal() {
         this.setState({
-            modalOpen: !this.state.modalOpen
+            modalOpen: !this.state.modalOpen,
+            touched: {
+                doB: false,
+                startDate: false
+            }
         })
     }
 
@@ -155,6 +158,8 @@ class StaffList extends Component {
                 <div key={staff.id} className="col-6 col-md-4 col-lg-2 mb-3">
                     <RenderStaffListItem
                         staff={staff}
+                        addNewStaff={this.props.addNewStaff}
+                        staffId={this.props.staffId}
                         isLoading={this.props.staffsLoading}
                         errMess={this.props.staffsErrMess}
                     />
@@ -197,7 +202,7 @@ class StaffList extends Component {
                 <Modal isOpen={this.state.modalOpen} toggle={this.toggleModal} >
                     <ModalHeader toggle={this.toggleModal} >Thêm Nhân Viên</ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                        <LocalForm onSubmit={(value) => this.handleSubmit(value)}>
                             <Row className="form-group">
                                 <Label htmlFor="name" md={5}>Tên</Label>
                                 <Col md={7}>
@@ -259,12 +264,12 @@ class StaffList extends Component {
                             </Row>
 
                             <Row className="form-group mt-3">
-                                <Label htmlFor="department.name" md={5}>Phòng ban</Label>
+                                <Label htmlFor="department" md={5}>Phòng ban</Label>
                                 <Col md={7}>
                                     <Control.select
-                                        model=".department.name"
-                                        name="department.name"
-                                        id="department.name"
+                                        model=".department"
+                                        name="department"
+                                        id="department"
                                         defaultValue="Sale"
                                         className="form-control p-0"
                                     >
