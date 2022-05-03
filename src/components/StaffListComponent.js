@@ -52,7 +52,6 @@ class StaffList extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     //Khi nhấn vào thì set lại state của touched thành true
@@ -62,45 +61,9 @@ class StaffList extends Component {
         })
     }
 
-    //Khi Input bị thay đổi thì set state lại thành giá trị nhật
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        })
-    }
-
     //Tạo một nhần viên mới với các dữ liệu đã được điền
     handleSubmit = (value) => {
-        if (this.state.doB === "" || this.state.startDate === "") {
-            this.setState({
-                touched: {
-                    doB: true,
-                    startDate: true
-                }
-            })
-        } else {
-            this.props.addNewStaff(this.props.staffId, value.name, value.doB, value.startDate, value.department, value.salaryScale, value.annualLeave, value.overTime);
-        }
-    }
-
-    //Validation cho các ô input date
-    validate(doB, startDate) {
-        const errors = {
-            doB: "",
-            startDate: ""
-        }
-
-        if (this.state.touched.doB && doB.length < 1) {
-            errors.doB = "Yêu cầu nhập";
-        }
-        if (this.state.touched.startDate && startDate.length < 1) {
-            errors.startDate = "Yêu cầu nhập";
-        }
-
-        return errors;
+        this.props.addNewStaff(this.props.staffId, value.name, value.doB, value.startDate, value.departmentId, value.salaryScale, value.annualLeave, value.overTime);
     }
 
     //Đóng mở Modal thêm nhân viên
@@ -141,15 +104,13 @@ class StaffList extends Component {
             )
         }
         else {
-        //Tạo biến errors để 
-        const errors = this.validate(this.state.doB, this.state.startDate);
 
         //Dùng filter() để lọc ra nhân viên có keyword trong tên
         const staffList = this.props.staffs.staffs.filter((staff) => {
             if(this.state.name === "") {
-                return staff;
+                return staff.name != null;
             } else if(staff.name.toLowerCase().includes(this.state.name.toLowerCase())) {
-                return staff;
+                return staff.name != null;
             }
             return 0;
         //Dùng map() để lặp qua từng nhân viên và render danh sách nhân viên
@@ -210,6 +171,7 @@ class StaffList extends Component {
                                         className="form-control"
                                         model=".name"
                                         id="name"
+                                        name="name"
                                         validators={{
                                             required,
                                             minLength: minLength(3),
@@ -232,52 +194,68 @@ class StaffList extends Component {
                             <Row className="form-group mt-3">
                                 <Label htmlFor="doB" md={5}>Ngày sinh</Label>
                                 <Col md={7}>
-                                    <Input 
+                                    <Control.text 
+                                        className="form-control"
                                         type="date"
+                                        model=".doB"
                                         name="doB"
                                         id="doB"
                                         value={this.state.tenState}
-                                        valid={errors.doB === ""}
-                                        invalid={errors.doB !== ""}
-                                        onBlur={this.handleBlur("doB")}
-                                        onChange={this.handleInputChange}
+                                        validators={{
+                                            required
+                                        }}
                                     />
-                                    <FormFeedback>{errors.doB}</FormFeedback>
+                                    <Errors
+                                        model=".doB"
+                                        className="text-danger"
+                                        show="touched"
+                                        messages={{
+                                            required: "Yêu cầu nhập"
+                                        }}
+                                    />
                                 </Col>
                             </Row>
 
                             <Row className="form-group mt-3">
                                 <Label htmlFor="startDate" md={5}>Ngày vào công ty</Label>
                                 <Col md={7}>
-                                    <Input
+                                    <Control.text
+                                        className="form-control"
                                         type="date"
+                                        model=".startDate"
                                         name="startDate"
                                         id="startDate"
                                         value={this.state.tenState}
-                                        valid={errors.startDate === ""}
-                                        invalid={errors.startDate !== ""}
-                                        onBlur={this.handleBlur("startDate")}
-                                        onChange={this.handleInputChange}
+                                        validators={{
+                                            required
+                                        }}
                                     />
-                                    <FormFeedback>{errors.startDate}</FormFeedback>
+                                    <Errors
+                                        model=".startDate"
+                                        className="text-danger"
+                                        show="touched"
+                                        messages={{
+                                            required: "Yêu cầu nhập"
+                                        }}
+                                    />
                                 </Col>
                             </Row>
 
                             <Row className="form-group mt-3">
-                                <Label htmlFor="department" md={5}>Phòng ban</Label>
+                                <Label htmlFor="departmentId" md={5}>Phòng ban</Label>
                                 <Col md={7}>
                                     <Control.select
-                                        model=".department"
-                                        name="department"
-                                        id="department"
-                                        defaultValue="Sale"
+                                        model=".departmentId"
+                                        name="departmentId"
+                                        id="departmentId"
+                                        defaultValue="Dept01"
                                         className="form-control p-0"
                                     >
-                                        <option value="Sale">Sale</option>
-                                        <option value="HR">HR</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="IT">IT</option>
-                                        <option value="Finance">Finance</option>
+                                        <option value="Dept01">Sale</option>
+                                        <option value="Dept02">HR</option>
+                                        <option value="Dept03">Marketing</option>
+                                        <option value="Dept04">IT</option>
+                                        <option value="Dept05">Finance</option>
                                     </Control.select>
                                 </Col>
                             </Row>

@@ -3,14 +3,16 @@ import { CardTitle, CardText, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from 'react-router-dom';
 
 //Presentational components
-function RenderDepartment ({department}) {
+function RenderDepartment ({department, numberOfStaff}) {
 
     //Render danh sách các phòng ban
     return(
         <div key={department.id} className="col-12 col-md-6 col-lg-4 pb-5 pl-5 pr-5">
             <div>
-                <CardTitle>{department.name}</CardTitle>
-                <CardText className="border-top">Số lượng nhân viên: {department.numberOfStaff}</CardText>
+                <Link to={`/Phòng-Ban/${department.id}`}>
+                    <CardTitle>{department.name}</CardTitle>
+                    <CardText className="border-top">Số lượng nhân viên: {numberOfStaff.length}</CardText>
+                </Link>
             </div>
         </div>
     )
@@ -23,7 +25,10 @@ function Department(props) {
     //Dùng map() để lặp qua từng phòng ban và lấy chúng vào danh sách 
     const department = props.departments.departments.map((department) => {
         return(
-            <RenderDepartment department={department} />
+            <RenderDepartment
+                department={department}
+                numberOfStaff={props.staffs.staffs.filter((staff) => staff.departmentId === department.id)}
+            />
         )
     })
 

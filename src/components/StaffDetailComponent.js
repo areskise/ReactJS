@@ -68,6 +68,7 @@ import { Loading } from './LoadingComponent';
                     <div className="row m-0">
                         <RenderStaff
                             staff={props.staff}
+                            staffId={props.staffId}
                             isLoading={props.staffsLoading}
                             errMess={props.staffsErrMess}
                         />
