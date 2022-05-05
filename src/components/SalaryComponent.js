@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import {Breadcrumb, BreadcrumbItem, CardTitle, CardText, CardBody, Card } from "reactstrap";
 import { Link } from "react-router-dom";
+import { FadeTransform } from 'react-animation-components';
 
 //Render danh sách lương của nhân viên
 function RenderSalary({ staff }) {
 
-    //Thêm thuộc tính salary vào trong staff và tính lương
-    staff.salary = parseInt((parseFloat(staff.salaryScale) * 3000000 + (parseFloat(staff.overTime) / 8) * 200000),10);
-    
     return(
-        <Card>
-            <CardTitle className="p-3 pl-4 m-0">{staff.name}</CardTitle>
-            <CardBody className="p-0 pl-5 pb-3">
-                <CardText>Mã nhân viên: {staff.id}</CardText>
-                <CardText>Hệ số lương: {staff.salaryScale}</CardText>
-                <CardText>Số giờ làm thêm: {staff.overTime}</CardText>
-            </CardBody>
-            <CardText className="border-top text-center p-2">Lương: {staff.salary}</CardText>
-        </Card>
+        <FadeTransform in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
+            <Card>
+                <CardTitle className="p-3 pl-4 m-0">{staff.name}</CardTitle>
+                <CardBody className="p-0 pl-5 pb-3">
+                    <CardText>Mã nhân viên: {staff.id}</CardText>
+                    <CardText>Hệ số lương: {staff.salaryScale}</CardText>
+                    <CardText>Số giờ làm thêm: {staff.overTime}</CardText>
+                </CardBody>
+                <CardText className="border-top text-center p-2">Lương: {staff.salary}</CardText>
+            </Card>
+        </FadeTransform>
     )
 }
 
@@ -27,7 +30,7 @@ function Salary(props) {
     const [sortSalary, setSort] = useState(false);
 
     //Sắp xếp lại danh sách theo lương khi sortStaff được thay đổi
-    const salaryList = props.staffs.staffs.filter((staff) => staff.name != null).sort((a, b) => {
+    const salaryList = props.staffs.staffs.sort((a, b) => {
         if (sortSalary) {
             return b.salary - a.salary;
         } else {

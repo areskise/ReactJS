@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, CardImg, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import dateFormat from 'dateformat';
+import { Card, CardImg, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { FadeTransform } from 'react-animation-components';
 
 const RenderDepartmentStaff = ({ staff, isLoading, errMess}) => {
     if (isLoading) {
@@ -17,12 +17,17 @@ const RenderDepartmentStaff = ({ staff, isLoading, errMess}) => {
     }
     else {
         return(
-            <Card>
-                <Link to={`/Nhân-Viên/${staff.id}`}>
-                    <CardImg width="100%" src={staff.image} alt={staff.name} />
-                    <CardText className="text-center m-2">{staff.name}</CardText>
-                </Link>
-            </Card>
+            <FadeTransform in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                <Card>
+                    <Link to={`/Nhân-Viên/${staff.id}`}>
+                        <CardImg width="100%" src={staff.image} alt={staff.name} />
+                        <CardText className="text-center m-2">{staff.name}</CardText>
+                    </Link>
+                </Card>
+            </FadeTransform>
         );
     }
 }

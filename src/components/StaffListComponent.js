@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, BreadcrumbItem, Breadcrumb, Form, FormGroup, FormFeedback,
+import { Card, CardImg, CardText, BreadcrumbItem, Breadcrumb, Form, FormGroup,
     Col, Input, Button, Modal, ModalHeader, ModalBody, Row, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from './LoadingComponent';
+import { deleteStaff } from '../redux/ActionCreators';
+import { FadeTransform } from 'react-animation-components';
 
 const required = (val) => val && val.length;
 const maxlength = (len) => (val) => !val || val.length <= len;
@@ -11,7 +13,7 @@ const minLength = (len) => (val) => !val || val.length >= len;
 const isNumber = (val) => !isNaN(Number(val));
 
 //Render từng nhân viên có trong danh sách
-const RenderStaffListItem = ({ staff, isLoading, errMess}) => {
+const RenderStaffListItem = ({ staff, onDeleteStaff, isLoading, errMess}) => {
     if (isLoading) {
         return(
             <Loading />
@@ -24,12 +26,18 @@ const RenderStaffListItem = ({ staff, isLoading, errMess}) => {
     }
     else {
         return(
-            <Card>
-                <Link to={`/Nhân-Viên/${staff.id}`}>
-                <CardImg width="100%" src={staff.image} alt={staff.name} />
-                <CardText className="text-center m-2">{staff.name}</CardText>
-                </Link>
-            </Card>
+            <FadeTransform in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                <Card>
+                    <Link to={`/Nhân-Viên/${staff.id}`}>
+                    <CardImg width="100%" src={staff.image} alt={staff.name} />
+                    <CardText className="text-center m-2">{staff.name}</CardText>
+                    </Link>
+                    <Button className="btn btn-danger" onClick={()=>onDeleteStaff(staff.id)}>Xóa</Button>
+                </Card>
+            </FadeTransform>
         );
     }
 }
@@ -108,9 +116,9 @@ class StaffList extends Component {
         //Dùng filter() để lọc ra nhân viên có keyword trong tên
         const staffList = this.props.staffs.staffs.filter((staff) => {
             if(this.state.name === "") {
-                return staff.name != null;
+                return staff;
             } else if(staff.name.toLowerCase().includes(this.state.name.toLowerCase())) {
-                return staff.name != null;
+                return staff;
             }
             return 0;
         //Dùng map() để lặp qua từng nhân viên và render danh sách nhân viên
@@ -120,6 +128,7 @@ class StaffList extends Component {
                     <RenderStaffListItem
                         staff={staff}
                         addNewStaff={this.props.addNewStaff}
+                        onDeleteStaff={this.props.onDeleteStaff}
                         staffId={this.props.staffId}
                         isLoading={this.props.staffsLoading}
                         errMess={this.props.staffsErrMess}

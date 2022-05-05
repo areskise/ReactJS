@@ -85,3 +85,16 @@ export const addStaffsSalary = (staffsSalary) => ({
     type: ActionTypes.ADD_STAFFSSALARY,
     payload: staffsSalary
 });
+
+//DeleteStaff
+export const deleteSuccess = (id) => ({
+    type: ActionTypes.DELETE_SUCCESS,
+    payload: id
+})
+
+export const deleteStaff = (id) => (dispatch) => {
+    if (window.confirm("Chắc chắn muốn XÓA nhân viên này?")) {
+        return fetch(baseUrl + `staffs/${id}`, {method: 'DELETE'})
+            .then(() => dispatch(deleteSuccess(id)))
+    } else return;
+}

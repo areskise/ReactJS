@@ -8,7 +8,8 @@ import Footer from './FooterComponent';
 import Salary from "./SalaryComponent";
 import { Route, Switch, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { addNewStaff, fetchDepartments, fetchStaffs, fetchStaffsSalary } from '../redux/ActionCreators';
+import { addNewStaff, fetchDepartments, fetchStaffs, fetchStaffsSalary, deleteStaff } from '../redux/ActionCreators';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const mapStateToProps = state => {
     return {
@@ -23,6 +24,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchStaffs: () => {dispatch(fetchStaffs())},
     fetchDepartments: () => {dispatch(fetchDepartments())},
     fetchStaffsSalary: () => {dispatch(fetchStaffsSalary())},
+    deleteStaff: (id) => {dispatch(deleteStaff(id))},
+    
 })
 
 class Main extends Component {
@@ -59,28 +62,32 @@ class Main extends Component {
         return(
             <div>
                 <Header />
-                <Switch>
-                    <Route exact path="/Nhân-Viên" component={() => <StaffList
-                        staffs={this.props.staffs}
-                        addNewStaff={this.props.addNewStaff}
-                        isLoading={this.props.staffs.isLoading}
-                        errMess={this.props.staffs.errMess}
-                    />} />
-                    <Route exact path="/Nhân-Viên/:staffId" component={StaffWithId} />
-                    <Route exact path="/Phòng-Ban" component={() => <Department
-                        departments={this.props.departments} 
-                        staffs={this.props.staffs}
-                        isLoading={this.props.departments.isLoading}
-                        errMess={this.props.departments.errMess}
-                    />} />
-                    <Route exact path="/Phòng-Ban/:departmentId" component={DepartmentWithId} />
-                    <Route exact path="/Bảng-Lương" component={() => <Salary 
-                        staffs={this.props.staffs}
-                        isLoading={this.props.staffsSalary.isLoading}
-                        errMess={this.props.staffsSalary.errMess}
-                    />} />
-                    <Redirect to="/Nhân-Viên" />
-                </Switch>
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                        <Switch location={this.props.location}>
+                            <Route exact path="/Nhân-Viên" component={() => <StaffList
+                                staffs={this.props.staffs}
+                                addNewStaff={this.props.addNewStaff}
+                                isLoading={this.props.staffs.isLoading}
+                                errMess={this.props.staffs.errMess}
+                            />} />
+                            <Route exact path="/Nhân-Viên/:staffId" component={StaffWithId} />
+                            <Route exact path="/Phòng-Ban" component={() => <Department
+                                departments={this.props.departments} 
+                                staffs={this.props.staffs}
+                                isLoading={this.props.departments.isLoading}
+                                errMess={this.props.departments.errMess}
+                            />} />
+                            <Route exact path="/Phòng-Ban/:departmentId" component={DepartmentWithId} />
+                            <Route exact path="/Bảng-Lương" component={() => <Salary 
+                                staffs={this.props.staffs}
+                                isLoading={this.props.staffsSalary.isLoading}
+                                errMess={this.props.staffsSalary.errMess}
+                            />} />
+                            <Redirect to="/Nhân-Viên" />
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
                 <Footer />
             </div>
         )
