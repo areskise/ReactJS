@@ -34,14 +34,22 @@ const RenderDepartmentStaff = ({ staff, isLoading, errMess}) => {
 
     const DepartmentDetail = (props) => {
 
-        if (props.isLoading) {
+        if(props.isLoading) {
             return(
-                <Loading />
+                <div className='container'>
+                    <div className='row'>
+                        <Loading />
+                    </div>
+                </div>
             )
         }
         else if (props.errMess) {
             return(
-                <h4>{props.errMess}</h4>
+                <div className='container'>
+                    <div className='row'>
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
             )
         }
         else {

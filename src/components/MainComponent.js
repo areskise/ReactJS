@@ -8,7 +8,7 @@ import Footer from './FooterComponent';
 import Salary from "./SalaryComponent";
 import { Route, Switch, Redirect, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
-import { addNewStaff, fetchDepartments, fetchStaffs, fetchStaffsSalary, deleteStaff } from '../redux/ActionCreators';
+import { postStaff, fetchDepartments, fetchStaffs, fetchStaffsSalary, deleteStaff, patchStaff } from '../redux/ActionCreators';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const mapStateToProps = state => {
@@ -20,7 +20,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addNewStaff: (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(addNewStaff(staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
+    postStaff: (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(postStaff(staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
+    patchStaff: (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(patchStaff(staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
     fetchStaffs: () => {dispatch(fetchStaffs())},
     fetchDepartments: () => {dispatch(fetchDepartments())},
     fetchStaffsSalary: () => {dispatch(fetchStaffsSalary())},
@@ -43,6 +44,7 @@ class Main extends Component {
                 <StaffDetail
                     departments={this.props.departments}
                     staff={this.props.staffs.staffs.filter((staff) => staff.id === parseInt(match.params.staffId, 10))[0]}
+                    patchStaff={this.props.patchStaff}
                     isLoading={this.props.staffs.isLoading}
                     errMess={this.props.staffs.errMess}
                 />
@@ -67,7 +69,8 @@ class Main extends Component {
                         <Switch location={this.props.location}>
                             <Route exact path="/Nhân-Viên" component={() => <StaffList
                                 staffs={this.props.staffs}
-                                addNewStaff={this.props.addNewStaff}
+                                deleteStaff={this.props.deleteStaff}
+                                postStaff={this.props.postStaff}
                                 isLoading={this.props.staffs.isLoading}
                                 errMess={this.props.staffs.errMess}
                             />} />

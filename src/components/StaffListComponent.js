@@ -4,7 +4,6 @@ import { Card, CardImg, CardText, BreadcrumbItem, Breadcrumb, Form, FormGroup,
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from './LoadingComponent';
-import { deleteStaff } from '../redux/ActionCreators';
 import { FadeTransform } from 'react-animation-components';
 
 const required = (val) => val && val.length;
@@ -13,7 +12,7 @@ const minLength = (len) => (val) => !val || val.length >= len;
 const isNumber = (val) => !isNaN(Number(val));
 
 //Render từng nhân viên có trong danh sách
-const RenderStaffListItem = ({ staff, onDeleteStaff, isLoading, errMess}) => {
+const RenderStaffListItem = ({ staff, deleteStaff, isLoading, errMess }) => {
     if (isLoading) {
         return(
             <Loading />
@@ -35,7 +34,7 @@ const RenderStaffListItem = ({ staff, onDeleteStaff, isLoading, errMess}) => {
                     <CardImg width="100%" src={staff.image} alt={staff.name} />
                     <CardText className="text-center m-2">{staff.name}</CardText>
                     </Link>
-                    <Button className="btn btn-danger" onClick={()=>onDeleteStaff(staff.id)}>Xóa</Button>
+                    <Button className="btn btn-danger" onClick={()=>deleteStaff(staff.id)}>Xóa</Button>
                 </Card>
             </FadeTransform>
         );
@@ -71,7 +70,7 @@ class StaffList extends Component {
 
     //Tạo một nhần viên mới với các dữ liệu đã được điền
     handleSubmit = (value) => {
-        this.props.addNewStaff(this.props.staffId, value.name, value.doB, value.startDate, value.departmentId, value.salaryScale, value.annualLeave, value.overTime);
+        this.props.postStaff(this.props.staffId, value.name, value.doB, value.startDate, value.departmentId, value.salaryScale, value.annualLeave, value.overTime);
     }
 
     //Đóng mở Modal thêm nhân viên
@@ -127,8 +126,8 @@ class StaffList extends Component {
                 <div key={staff.id} className="col-6 col-md-4 col-lg-2 mb-3">
                     <RenderStaffListItem
                         staff={staff}
-                        addNewStaff={this.props.addNewStaff}
-                        onDeleteStaff={this.props.onDeleteStaff}
+                        postStaff={this.props.postStaff}
+                        deleteStaff={this.props.deleteStaff}
                         staffId={this.props.staffId}
                         isLoading={this.props.staffsLoading}
                         errMess={this.props.staffsErrMess}
