@@ -20,11 +20,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    postStaff: (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(postStaff(staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
-    patchStaff: (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(patchStaff(staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
     fetchStaffs: () => {dispatch(fetchStaffs())},
     fetchDepartments: () => {dispatch(fetchDepartments())},
     fetchStaffsSalary: () => {dispatch(fetchStaffsSalary())},
+    postStaff: (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(postStaff(staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
+    patchStaff: (id, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => dispatch(patchStaff(id, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime)),
     deleteStaff: (id) => {dispatch(deleteStaff(id))},
     
 })
@@ -83,7 +83,7 @@ class Main extends Component {
                             />} />
                             <Route exact path="/Phòng-Ban/:departmentId" component={DepartmentWithId} />
                             <Route exact path="/Bảng-Lương" component={() => <Salary 
-                                staffs={this.props.staffs}
+                                staffsSalary={this.props.staffsSalary}
                                 isLoading={this.props.staffsSalary.isLoading}
                                 errMess={this.props.staffsSalary.errMess}
                             />} />

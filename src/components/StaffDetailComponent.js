@@ -176,6 +176,7 @@ class StaffDetail extends Component {
                                             model=".doB"
                                             name="doB"
                                             id="doB"
+                                            defaultValue={this.props.staff.doB}
                                             value={this.state.tenState}
                                             validators={{
                                                 required
@@ -201,6 +202,7 @@ class StaffDetail extends Component {
                                             model=".startDate"
                                             name="startDate"
                                             id="startDate"
+                                            defaultValue={this.props.staff.startDate}
                                             value={this.state.tenState}
                                             validators={{
                                                 required

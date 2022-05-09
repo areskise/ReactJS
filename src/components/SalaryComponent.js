@@ -60,7 +60,7 @@ function Salary(props) {
         const [sortSalary, setSort] = useState(false);
 
         //Sắp xếp lại danh sách theo lương khi sortStaff được thay đổi
-        const salaryList = props.staffs.staffs.sort((a, b) => {
+        const salaryList = props.staffsSalary.staffsSalary.sort((a, b) => {
             if (sortSalary) {
                 return b.salary - a.salary;
             } else {
@@ -72,7 +72,10 @@ function Salary(props) {
         }).map((staff) => {
             return(
                 <div key={staff.id} className="col-12 col-md-6 col-lg-4 mb-5">
-                    <RenderSalary staff={staff} />
+                    <RenderSalary
+                    staff={staff}
+                    staffs={props.staffs}
+                    />
                 </div>
             )
         })

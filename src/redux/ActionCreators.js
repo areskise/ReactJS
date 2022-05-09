@@ -6,8 +6,27 @@ export const fetchStaffs = () => (dispatch) => {
     dispatch(staffsLoading(true));
 
     return fetch(baseUrl + 'staffs')
+        .then(
+            (response) => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    var error = new Error( "Error " + response.status + ": " + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            (error) => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            }
+        )
         .then(response => response.json())
         .then(staffs => dispatch(addStaffs(staffs)))
+        .catch(error => {console.log('Post staffs ', error.message)
+            alert('In danh sách nhân viên bị lỗi\nError: ' + error.message);
+        })
 }
 
 export const staffsLoading = () => ({
@@ -28,7 +47,7 @@ export const addStaffs = (staffs) => ({
 export const postStaff = (staffId, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => (dispatch) => {
 
     const newStaff = {
-        staffId: staffId,
+        id: staffId,
         name: name,
         doB: doB,
         startDate: startDate,
@@ -63,37 +82,58 @@ export const postStaff = (staffId, name, doB, startDate, departmentId, salarySca
         )
         .then((response) => response.json())
         .then(response => dispatch(addStaffs(response)))
+        .then(response => dispatch(fetchStaffsSalary(response)))
         .catch(error => {console.log('Post staffs ', error.message)
-            alert('Không thể thêm nhân viên mới\nError: ' + error.message);
+            alert('Thêm nhân viên mới bị lỗi\nError: ' + error.message);
         })
 }
 
 //Delete Staff
-export const deleteStaff = (id) => (dispatch) => {
-    if (window.confirm("Chắc chắn muốn XÓA nhân viên này?")) {
-        return fetch(baseUrl + `staffs/${id}`, {
-            method: 'DELETE'
-        })
-        .then((response) => response.json())
-        .then(response => dispatch(addStaffs(response)))
-        .then((id) => dispatch(deleteSuccess(id)))
-    } else return;
-}
-    
-export const deleteLoading = () => ({
-    type: ActionTypes.DELETE_LOADING
-})
-
 export const deleteSuccess = (id) => ({
     type: ActionTypes.DELETE_SUCCESS,
     payload: id
 })
 
+export const deleteStaff = (id) => (dispatch) => {
+    if (window.confirm("Chắc chắn muốn XÓA nhân viên này?")) {
+        return fetch(baseUrl + `staffs/${id}`, {
+            method: 'DELETE'
+        })
+        .then(
+            (response) => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    var error = new Error( "Error " + response.status + ": " + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            (error) => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            }
+        )
+        .then((response) => response.json())
+        .then((id) => dispatch(deleteSuccess(id)))
+        .then(response => dispatch(fetchStaffsSalary(response)))
+        .catch(error => {console.log('Post staffs ', error.message)
+            alert('Xóa nhân viên bị lỗi\nError: ' + error.message);
+        })
+    } else return;
+}
+    
 //Patch Staff
+export const patchSuccess = (staffs) => ({
+    type: ActionTypes.PATCH_SUCCESS,
+    payload: staffs
+})
+
 export const patchStaff = (id, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime) => (dispatch) => {
     
     if (window.confirm("Chắc chắn muốn CẬP NHẬT nhân viên này?")) {
-        return fetch(baseUrl + `staffs/${id}`, {
+        return fetch(baseUrl + 'staffs', {
             method: 'PATCH',
             body: JSON.stringify({
                 id: id,
@@ -105,31 +145,60 @@ export const patchStaff = (id, name, doB, startDate, departmentId, salaryScale, 
                 annualLeave: annualLeave,
                 overTime: overTime,
                 image: "/assets/images/alberto.png"
-            }),
+            }),    
             headers: {'Content-type': 'application/json'}
-        })
+        }) 
+        .then(
+            (response) => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    var error = new Error( "Error " + response.status + ": " + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            (error) => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            }
+        )   
         .then((response) => response.json())
-        .then(response => dispatch(addStaffs(response)))
-        .then((staffId) => dispatch(patchSuccess(staffId)))
-    } else return;
-}
+        .then((response) => dispatch(patchSuccess(response)))
+        .then(response => dispatch(fetchStaffsSalary(response)))
+        .catch(error => {console.log('Post staffs ', error.message)
+            alert('Cập nhật nhân viên bị lỗi\nError: ' + error.message);
+        })
+    } else return;    
+}    
     
-export const patchLoading = () => ({
-    type: ActionTypes.PATCH_LOADING
-})
-
-export const patchSuccess = (id) => ({
-    type: ActionTypes.PATCH_SUCCESS,
-    payload: id
-})
-
 //Departments
 export const fetchDepartments = () => (dispatch) => {
     dispatch(departmentsLoading(true));
 
     return fetch(baseUrl + 'departments')
+        .then(
+            (response) => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    var error = new Error( "Error " + response.status + ": " + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            (error) => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            }
+        )
         .then(response => response.json())
         .then(departments => dispatch(addDepartments(departments)))
+        .catch(error => {console.log('Post staffs ', error.message)
+            alert('In danh sách phòng ban bị lỗi\nError: ' + error.message);
+        })
 }
 
 export const departmentsLoading = () => ({
@@ -151,8 +220,27 @@ export const fetchStaffsSalary = () => (dispatch) => {
     dispatch(staffsSalaryLoading(true));
 
     return fetch(baseUrl + 'staffsSalary')
+        .then(
+            (response) => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    var error = new Error( "Error " + response.status + ": " + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            (error) => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            }
+        )
         .then(response => response.json())
         .then(staffsSalary => dispatch(addStaffsSalary(staffsSalary)))
+        .catch(error => {console.log('Post staffs ', error.message)
+            alert('In bảng lương bị lỗi\nError: ' + error.message);
+        })
 }
 
 export const staffsSalaryLoading = () => ({

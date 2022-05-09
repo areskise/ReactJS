@@ -15,8 +15,12 @@ export const Staffs = (state = {
         case ActionTypes.STAFFS_FAILED:
             return {...state, isLoading: false, errMess: action.payload, staffs: []};
 
-        
+        case ActionTypes.DELETE_SUCCESS:
+            return {...state, isLoading: false, errMess: null, staffs: action.payload};
 
+        case ActionTypes.PATCH_SUCCESS:
+            return {...state, isLoading: false, errMess: null, staffs: action.payload};
+        
         default:
             return state;
     }

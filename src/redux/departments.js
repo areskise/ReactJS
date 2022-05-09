@@ -15,6 +15,12 @@ export const Departments = (state = {
         case ActionTypes.DEPARTMENTS_FAILED:
             return {...state, isLoading: false, errMess: action.payload, departments: []};
 
+        case ActionTypes.DELETE_SUCCESS:
+            return {...state, isLoading: false, errMess: null, staffs: action.payload};
+
+        case ActionTypes.PATCH_SUCCESS:
+            return {...state, isLoading: false, errMess: null, staffs: action.payload};            
+        
         default:
             return state;
     }

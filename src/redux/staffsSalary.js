@@ -14,7 +14,13 @@ export const StaffsSalary = (state = {
 
         case ActionTypes.STAFFSSALARY_FAILED:
             return {...state, isLoading: false, errMess: action.payload, staffsSalary: []};
- 
+        
+        case ActionTypes.DELETE_SUCCESS:
+            return {...state, isLoading: false, errMess: null, staffs: action.payload};
+
+        case ActionTypes.PATCH_SUCCESS:
+            return {...state, isLoading: false, errMess: null, staffs: action.payload};
+        
         default:
             return state;
     }
